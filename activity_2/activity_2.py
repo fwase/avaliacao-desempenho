@@ -1,6 +1,6 @@
-from functools import reduce
 from scipy.stats import t
 from math import sqrt
+from random import randint
 
 from activity_1.activity_1 import arithmetic_average, std_dev
 
@@ -61,9 +61,9 @@ def confidence_interval_unpaired_samples(
 
     z_value = t.ppf(confidence_level, degrees_freedom)
     min_value = diff_mean_samples - (diff_mean_std_dev * z_value)
-    min_value = diff_mean_samples + (diff_mean_std_dev * z_value)
+    max_value = diff_mean_samples + (diff_mean_std_dev * z_value)
 
-    return (min_value, min_value)
+    return (min_value, max_value)
 
 
 def size_of_sample(mean, std_dev_value, z_value, precision):
@@ -74,5 +74,20 @@ def size_of_sample(mean, std_dev_value, z_value, precision):
 
 
 if __name__ == "__main__":
-    values = [-0.04, -0.19, 0.14, -0.09, -0.14, 0.19, 0.04, 0.09]
-    print(confidence_interval(values, 0.95))
+    sample_a = [randint(0,100) for _ in range(20)]
+    sample_b = [randint(0,1000) for _ in range(100)]
+
+    ci_samples_a = confidence_interval(sample_a, 0.9)
+    ci_samples_b = confidence_interval(sample_b, 0.95)
+
+    print('Confidence interval:')
+    print(f'Sample A: {ci_samples_a}')
+    print(f'Sample B: {ci_samples_b}')
+
+    zero_test_sample_a = mean_zero_test(ci_samples_a)
+    zero_test_sample_b = mean_zero_test(ci_samples_b)
+
+    print('\nMean zero test:')
+    print(f'Sample A: {zero_test_sample_a}')
+    print(f'Sample B: {zero_test_sample_b}')
+
