@@ -74,20 +74,44 @@ def size_of_sample(mean, std_dev_value, z_value, precision):
 
 
 if __name__ == "__main__":
-    sample_a = [randint(0,100) for _ in range(20)]
-    sample_b = [randint(0,1000) for _ in range(100)]
+    sample_a = [randint(0, 100) for _ in range(20)]
+    sample_b = [randint(0, 1000) for _ in range(100)]
 
     ci_samples_a = confidence_interval(sample_a, 0.9)
     ci_samples_b = confidence_interval(sample_b, 0.95)
 
-    print('Confidence interval:')
-    print(f'Sample A: {ci_samples_a}')
-    print(f'Sample B: {ci_samples_b}')
+    print("Confidence interval:")
+    print(f"Sample A: {ci_samples_a}")
+    print(f"Sample B: {ci_samples_b}")
 
     zero_test_sample_a = mean_zero_test(ci_samples_a)
     zero_test_sample_b = mean_zero_test(ci_samples_b)
 
-    print('\nMean zero test:')
-    print(f'Sample A: {zero_test_sample_a}')
-    print(f'Sample B: {zero_test_sample_b}')
+    print("\nMean zero test:")
+    print(f"Sample A: {zero_test_sample_a}")
+    print(f"Sample B: {zero_test_sample_b}")
 
+    ci_samples_a_and_b = confidence_interval_unpaired_samples(sample_a, sample_b, 0.9)
+
+    print("\nConfidence interval unpaired samples")
+    print(f"{ci_samples_a_and_b}")
+
+    mean_sample_a = arithmetic_average(sample_a)
+    std_dev_sample_a = std_dev(sample_a)
+    z_value_sample_a = Z_VALUE[0.9]
+    precision_sample_a = 0.5
+
+    mean_sample_b = arithmetic_average(sample_b)
+    std_dev_sample_b = std_dev(sample_b)
+    z_value_sample_b = Z_VALUE[0.9]
+    precision_sample_b = 0.6
+
+    size_sample_a = size_of_sample(
+        mean_sample_a, std_dev_sample_a, z_value_sample_a, precision_sample_a
+    )
+    size_sample_b = size_of_sample(
+        mean_sample_b, std_dev_sample_b, z_value_sample_b, precision_sample_b
+    )
+    print("\nSimple of samples:")
+    print(f"Sample A: {size_sample_a}")
+    print(f"Sample B: {size_sample_b}")
