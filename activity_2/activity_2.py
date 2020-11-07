@@ -44,22 +44,24 @@ def confidence_interval_unpaired_samples(
     std_dev_sample_a = std_dev(sample_values_a)
     std_dev_sample_b = std_dev(sample_values_b)
     diff_mean_std_dev = sqrt(
-        (std_dev_sample_a / mean_sample_a) + (std_dev_sample_b / mean_sample_b)
+        ((std_dev_sample_a ** 2) / mean_sample_a) + ((std_dev_sample_b ** 2) / mean_sample_b)
     )
 
     numerator_df = (
-        (std_dev_sample_a / mean_sample_a) + (std_dev_sample_b / mean_sample_b)
+        ((std_dev_sample_a ** 2) / len(sample_values_a)) + ((std_dev_sample_b ** 2) / len(sample_values_b))
     ) ** 2
-    denominator_df_sample_a = (1 / (mean_sample_a - 1)) * (
-        (std_dev_sample_a / mean_sample_a) ** 2
+    denominator_df_sample_a = (1 / (len(sample_values_a) - 1)) * (
+        ((std_dev_sample_a ** 2) / len(sample_values_a)) ** 2
     )
-    denominator_df_sample_b = (1 / (mean_sample_b - 1)) * (
-        (std_dev_sample_b / mean_sample_b) ** 2
+    denominator_df_sample_b = (1 / (len(sample_values_b) - 1)) * (
+        ((std_dev_sample_b ** 2) / len(sample_values_b)) ** 2
     )
     denominator_df = denominator_df_sample_a + denominator_df_sample_b
     degrees_freedom = round((numerator_df / denominator_df) - 2)
+    print(degrees_freedom)
 
     z_value = t.ppf(confidence_level, degrees_freedom)
+    print(z_value)
     min_value = diff_mean_samples - (diff_mean_std_dev * z_value)
     max_value = diff_mean_samples + (diff_mean_std_dev * z_value)
 
