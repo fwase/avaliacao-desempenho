@@ -54,7 +54,7 @@ if __name__ == '__main__':
     b = get_b_shapiro_wilk(sample_sorted, pd_coefficients)
     W_calculated = pow(b,2) / s
 
-    hypothesis_null, significance_level = get_shapiro_result(pd_critical_values, W_calculated, 0.95)
+    hypothesis_null, significance_level = get_shapiro_result(pd_critical_values, W_calculated, confidence_level)
 
     ShapiroResult = namedtuple('ShapiroResult', ('hypothesis_null','significance_level'))
 
